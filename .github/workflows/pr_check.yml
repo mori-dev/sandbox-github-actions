@@ -4,6 +4,10 @@ on:
     branches:
       - main
 
+defaults:
+  run:
+    working-directory: frontend
+
 jobs:
 
   setup:
@@ -17,14 +21,14 @@ jobs:
       - name: Install Yarn
         run: npm install -g yarn
       - uses: actions/cache@v4
-        id: node_modules_cache_id
+        id: frontend_node_modules_cache_id
         env:
           cache-name: cache-node-modules
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-      - run: echo '${{ toJSON(steps.node_modules_cache_id.outputs) }}'
-      - if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
+      - run: echo '${{ toJSON(steps.frontend_node_modules_cache_id.outputs) }}'
+      - if: ${{ steps.frontend_node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: yarn install
 
   my-job:
@@ -36,17 +40,17 @@ jobs:
         with:
           # package.json/engines/node と同じ値にすること
           node-version: 21.6.1
-      #- name: Install Yarn
-      #  run: npm install -g yarn
+      - name: Install Yarn
+        run: npm install -g yarn
       - uses: actions/cache@v4
-        id: node_modules_cache_id
+        id: frontend_node_modules_cache_id
         env:
           cache-name: cache-node-modules
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-      - run: echo '${{ toJSON(steps.node_modules_cache_id.outputs) }}'
-      - if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
+      - run: echo '${{ toJSON(steps.frontend_node_modules_cache_id.outputs) }}'
+      - if: ${{ steps.frontend_node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: yarn install
       - name: Run TypeCheck
         run: yarn tsc
