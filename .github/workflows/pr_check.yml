@@ -1,4 +1,11 @@
 name: typecheck
+
+# on:
+#   pull_request:
+#     branches:
+#       - develop
+#       - master
+
 on:
   push:
     branches:
