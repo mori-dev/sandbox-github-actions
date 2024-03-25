@@ -2,7 +2,7 @@ name: typecheck
 on:
   push:
     branches:
-      - master
+      - main
 
 setup:
   runs-on: ubuntu-latest
