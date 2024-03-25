@@ -36,8 +36,8 @@ jobs:
         with:
           # package.json/engines/node と同じ値にすること
           node-version: 21.6.1
-      - name: Install Yarn
-        run: npm install -g yarn
+      #- name: Install Yarn
+      #  run: npm install -g yarn
       - uses: actions/cache@v4
         id: node_modules_cache_id
         env:
